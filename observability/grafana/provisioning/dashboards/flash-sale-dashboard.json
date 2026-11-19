@@ -1,0 +1,328 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "id": 100,
+      "title": "Business Metrics: Flash Sale Inventory & Orders",
+      "type": "row"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "blue", "value": 1 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 6, "w": 8, "x": 0, "y": 1 },
+      "id": 1,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.0.0",
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "editorMode": "code",
+          "expr": "flashsale_reservations_created_total",
+          "legendFormat": "Reservations Created",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Reservations Created",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "orange", "value": null }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 6, "w": 8, "x": 8, "y": 1 },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.0.0",
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "editorMode": "code",
+          "expr": "flashsale_reservations_expired_total",
+          "legendFormat": "Reservations Expired",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Reservations Expired",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 6, "w": 8, "x": 16, "y": 1 },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.0.0",
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "editorMode": "code",
+          "expr": "flashsale_orders_confirmed_total",
+          "legendFormat": "Orders Confirmed",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Orders Confirmed",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 7 },
+      "id": 101,
+      "title": "Traffic & Latency Performance",
+      "type": "row"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2
+          },
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+      "id": 4,
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "expr": "sum(rate(http_server_requests_seconds_count[1m])) by (uri, status)",
+          "legendFormat": "{{uri}} ({{status}})",
+          "refId": "A"
+        }
+      ],
+      "title": "HTTP Request Rate (req/s)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+      "id": 5,
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "expr": "histogram_quantile(0.95, sum(rate(http_server_requests_seconds_bucket[1m])) by (le))",
+          "legendFormat": "p95 Latency",
+          "refId": "A"
+        },
+        {
+          "datasource": "Prometheus",
+          "expr": "histogram_quantile(0.99, sum(rate(http_server_requests_seconds_bucket[1m])) by (le))",
+          "legendFormat": "p99 Latency",
+          "refId": "B"
+        }
+      ],
+      "title": "HTTP Latency (p95 / p99)",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 16 },
+      "id": 102,
+      "title": "JVM & Connection Pool Health",
+      "type": "row"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 2
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 17 },
+      "id": 6,
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "expr": "jvm_threads_live_threads",
+          "legendFormat": "Live Platform Threads",
+          "refId": "A"
+        },
+        {
+          "datasource": "Prometheus",
+          "expr": "jvm_threads_peak_threads",
+          "legendFormat": "Peak Threads",
+          "refId": "B"
+        }
+      ],
+      "title": "JVM Thread Count",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 2
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 17 },
+      "id": 7,
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "expr": "hikaricp_connections_active",
+          "legendFormat": "Active Connections",
+          "refId": "A"
+        },
+        {
+          "datasource": "Prometheus",
+          "expr": "hikaricp_connections_pending",
+          "legendFormat": "Pending Threads",
+          "refId": "B"
+        },
+        {
+          "datasource": "Prometheus",
+          "expr": "hikaricp_connections_idle",
+          "legendFormat": "Idle Connections",
+          "refId": "C"
+        }
+      ],
+      "title": "HikariCP Connection Pool",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": ["flash-sale", "spring-boot", "inventory"],
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": ["5s", "10s", "30s", "1m"]
+  },
+  "timezone": "browser",
+  "title": "Flash Sale Engine Overview",
+  "uid": "flash-sale-engine",
+  "version": 1
+}

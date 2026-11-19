@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: flash-sale-engine-test
+
+  threads:
+    virtual:
+      enabled: true
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: false
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+  kafka:
+    consumer:
+      group-id: test-group
+      auto-offset-reset: earliest
+
+server:
+  port: 0
+
+app:
+  reservation:
+    ttl-seconds: 300
+    expiration-poll-ms: 1000
+  ratelimit:
+    enabled: false
+    capacity: 20
+    duration-seconds: 10
+  kafka:
+    topics:
+      order-confirmed: flash-sale.orders.confirmed
+      order-confirmed-dlt: flash-sale.orders.confirmed-dlt
